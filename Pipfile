@@ -9,6 +9,7 @@ pandas = "*"
 seaborn = "*"
 matplotlib = "*"
 ipykernel = "*"
+openpyxl = "*"
 
 [dev-packages]
 
