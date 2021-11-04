@@ -24,6 +24,8 @@ class CovidData:
 
     def show_info(self):
         return f"""
+        Dataframe info:\n{self.df.info()}
+
         Name: {self.name}
 
         Sheet name: {self.sheetname}
@@ -32,9 +34,17 @@ class CovidData:
 
         Shape: {self.df.shape}
 
+        Index: {self.df.index}
+
         Columns: {self.df.columns}
 
-        Variables types: {self.df.dtypes}
+        Variables types:\n{self.df.dtypes}
+      
+        Dataframe description:\n{self.df.describe()}
+
+        Summary of missing values:\n{self.df.isnull().sum()}
+
+        Total number of missing values:\n{self.df.isnull().sum().sum()}
         
         The percentage of missing values in each column:\n{self.df.isnull().sum()/self.df.shape[0]}  
         
