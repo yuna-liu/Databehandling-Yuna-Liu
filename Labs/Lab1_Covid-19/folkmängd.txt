@@ -1,4 +1,0 @@
-kön	år	Folkmängd
-män	2020	5222847
-kvinnor	2020	5156448
-totalt	2020	10379295
