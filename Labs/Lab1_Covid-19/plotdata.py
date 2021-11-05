@@ -6,7 +6,7 @@ def time_series_plot(df, y_variables):
                     symbol="Region", title=y_variables[y_variable])
         fig.show()
         fig.write_html(
-            f"Visualiseringar/Q3.{y_variables[y_variable]}.html", auto_open=False)
+            f"Visualiseringar/Q3.{y_variables[y_variable]}.html", auto_open=True)
 
 def scatter_plot(df, y_variables, x):
     for y_variable in y_variables:
