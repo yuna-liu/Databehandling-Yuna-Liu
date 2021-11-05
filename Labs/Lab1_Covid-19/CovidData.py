@@ -6,6 +6,11 @@ import plotly_express as px
 import plotly.graph_objects as go
 from datetime import datetime
 
+## The clean data process OOP is inspired by the following referenes:
+# 1. https://opendatascience.com/an-introduction-to-object-oriented-data-science-in-python/
+# 2. https://stackoverflow.com/questions/69822737/is-oop-approach-towards-data-preprocessing-in-python-an-overkill
+
+
 class CovidData:
     """The CovidData class is used for the intention to parse data, check missing data, clean missing data, and then export cleaned data"""
     def __init__(self, name, import_path="data/", export_path="data_clean/", sheet_name = None):
