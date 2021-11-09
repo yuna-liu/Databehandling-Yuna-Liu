@@ -6,16 +6,6 @@ from dash.dependencies import Output, Input
 import plotly_express as px
 from time_filtering import filter_time
 
-
-## use terminal to git commit
-# Ctrl + c to see the default path
-# git pull to check new updates
-# git status to see all the changes
-# git add .
-# git commit -m "Messages to commit"
-# git push
-
-
 stock_data_object = StockDataLocal()
 
 symbol_dict = dict(AAPL="Apple", NVDA="Nvidia", TSLA="Tesla", IBM="IBM")

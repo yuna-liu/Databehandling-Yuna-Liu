@@ -17,3 +17,8 @@ label:hover {
 footer {
   background-color: #e2ebfa;
 }
+
+/* for fixing footer covering contents */
+body{
+  padding-bottom: 5rem;
+}

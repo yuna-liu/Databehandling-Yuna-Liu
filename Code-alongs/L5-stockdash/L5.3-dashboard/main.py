@@ -6,16 +6,6 @@ from dash.dependencies import Output, Input
 import plotly_express as px
 from time_filtering import filter_time
 
-
-# use terminal to git commit
-# Ctrl + c to see the default path
-# git pull to check new updates
-# git status to see all the changes
-# git add .
-# git commit -m "Messages to commit"
-# git push
-
-
 stock_data_object = StockDataLocal()
 
 symbol_dict = dict(AAPL="Apple", NVDA="Nvidia", TSLA="Tesla", IBM="IBM")
@@ -26,7 +16,7 @@ stock_options_dropdown = [{"label": name, "value": symbol}
 df_dict = {symbol: stock_data_object.stock_dataframe(symbol)
            for symbol in symbol_dict}
 
-# OHLC options: open, high, low, close
+# OHLC options - Open, High, Low, Close
 ohlc_options = [{"label": option.capitalize(), "value": option}
                 for option in ["open", "high", "low", "close"]]
 
@@ -40,16 +30,16 @@ app = dash.Dash(__name__)
 app.layout = html.Div([
     html.H1("Stocks viewer"),
     html.P("Choose a stock"),
-
     dcc.Dropdown(id='stock-picker-dropdown', className='',
                  options=stock_options_dropdown,
                  value='AAPL'
                  ),
     html.P(id="highest-value"),
     html.P(id="lowest-value"),
-
-    dcc.RadioItems(id="ohlc-radio", className=" ",
-                   options=ohlc_options, value="close"),
+    dcc.RadioItems(id='ohlc-radio', className='',
+                   options=ohlc_options,
+                   value='close'
+                   ),
     dcc.Graph(id='stock-graph', className=''),
 
     dcc.Slider(id='time-slider', className='',
@@ -57,20 +47,19 @@ app.layout = html.Div([
                step=None,
                value=2,
                marks=slider_marks),
-    # stores and intermediate value on clients browser for sharing between call
+
+    # stores an intermediate value on clients browser for sharing between callbacks
     dcc.Store(id="filtered-df")
 ])
 
 
 @app.callback(Output("filtered-df", "data"),
               Input("stock-picker-dropdown", "value"),
-              Input("time-slider", "value")
-              )
-
+              Input("time-slider", "value"))
 def filter_df(stock, time_index):
-    """Filters the dateframe and stores in intermediary for callbacks
+    """Filters the dataframe abd stores in intermediary for callbacks
     Returns:
-    json object of filtered dataframe
+        json object of filtered dataframe
     """
     dff_daily, dff_intraday = df_dict[stock]
 
@@ -80,6 +69,7 @@ def filter_df(stock, time_index):
     days = {i: day for i, day in enumerate([1, 7, 30, 90, 365, 365*5])}
 
     dff = dff if time_index == 6 else filter_time(dff, days[time_index])
+
     return dff.to_json()
 
 @app.callback(
@@ -89,12 +79,12 @@ def filter_df(stock, time_index):
     Input("ohlc-radio", "value")
 )
 def update_graph(json_df, stock, ohlc):
-
-    dff = pd.read_json(json_df)
-
-    fig = px.line(dff, x=dff.index, y=ohlc, title=symbol_dict[stock])
+    
+    dff = pd.read_json(json_df) 
+    fig = px.line(dff, x=dff.index, y=ohlc, title = symbol_dict[stock])
 
     return fig  # fig object goes into Output property i.e. figure property
+
 
 @app.callback(
     Output("highest-value", "children"),
@@ -102,10 +92,8 @@ def update_graph(json_df, stock, ohlc):
     Input("filtered-df", "data"),
     Input("ohlc-radio", "value")
 )
-
-
 def highest_lowest_value(json_df, ohlc):
-
+    
     dff = pd.read_json(json_df)
     highest_value = f"High {dff[ohlc].max():.1f}"
     lowest_value = f"Low {dff[ohlc].min():.1f}"

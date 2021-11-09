@@ -36,9 +36,7 @@ stylesheets = [dbc.themes.MATERIA]
 app = dash.Dash(__name__, external_stylesheets=stylesheets,
                 meta_tags=[dict(name="viewport", content="width=device-width, initial-scale=1.0")])
 
-server = app.server # needed for Heroku to connect to
-
-# TODO: bootstrap styling
+server = app.server  # needed for Heroku to connect to
 
 app.layout = dbc.Container([
     dbc.Card([
@@ -50,14 +48,15 @@ app.layout = dbc.Container([
 
     dbc.Row(className='mt-4', children=[
         dbc.Col(
-            html.P("Choose a stock"), xs="12", sm="12", md="6", lg="4", xl={"size": 1, "offset": 2}, # responsivity
+            # responsivity
+            html.P("Choose a stock"), xs="12", sm="12", md="6", lg="4", xl={"size": 1, "offset": 2},
             className="mt-1"
         ),
         dbc.Col(
             dcc.Dropdown(id='stock-picker-dropdown', className='',
                          options=stock_options_dropdown,
                          value='AAPL',
-                         placeholder='Apple'), xs="12", sm="12", md="12", lg="4", xl="3"), 
+                         placeholder='Apple'), xs="12", sm="12", md="12", lg="4", xl="3"),
 
         dbc.Col([
             dbc.Card([
@@ -66,7 +65,7 @@ app.layout = dbc.Container([
                                   value='close'
                                ),
             ])
-        ], xs = "12",sm="12", md= "12", lg='4', xl="3"),
+        ], xs="12", sm="12", md="12", lg='4', xl="3"),
     ]),
 
     dbc.Row([
@@ -79,7 +78,7 @@ app.layout = dbc.Container([
                        value=2,
                        marks=slider_marks
                        ),
-        ], lg={"size": "5", "offset": 1}),
+        ], lg={"size": "6", "offset": 1}, xl={"size": "6", "offset": 1}),
 
         dbc.Col([
             dbc.Row(
@@ -95,7 +94,7 @@ app.layout = dbc.Container([
                 ]),
                 className="mt-5 h-25"
             ),
-        ], lg=3, className="mt-5 mx-5"),
+        ], sm="5", md="3", lg="3", xl="2", className="mt-5 mx-5"),
 
         html.Footer([
             html.H3("Stock viewer 2021", className="h6"),
@@ -103,11 +102,6 @@ app.layout = dbc.Container([
             className="navbar fixed-bottom")
 
     ]),
-
-
-
-
-
 
     # stores an intermediate value on the clients browser for sharing between callbacks
     dcc.Store(id="filtered-df"),
